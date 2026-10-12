@@ -1,6 +1,6 @@
 export const config = {
     // Dashboard title
-    "title": "Fantastic Stats",
+    "title": "Population of Northern Ireland",
 
     // Set order of page links and display text in navigation bar
     "navigation": [
