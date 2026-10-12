@@ -93,12 +93,11 @@ It is only recommended to use this option if your code must remain private. (eg,
 ---
 
 #### Step 2: Clone Your repo in VS Code
-- Open VS Code → `View > Command Palette` → `Git: Clone`
-- Paste your repo's URL:
+- Open VS Code → Click on the Source Control panel → Click `Clone Repository`
+- Paste your repo's URL, eg:
 ```
-https://github.com/YOUR_USERNAME/dashboard-template
+https://github.com/YOUR_ORGANISATION/dashboard-template
 ```
-(Replace `YOUR_USERNAME` with your GitHub username)
 
 ### Step 3: Install Live Server Extension
 - In VS Code, go to Extensions → Search for **Live Server** → Install
@@ -113,17 +112,38 @@ For detailed implementation examples and best practices, explore the [dashboard-
 
 ---
 
-## 6. Data Preparation (`src/r/`)
-Run in RStudio:
-```r
-source("src/r/data.R")
-source("src/r/pivot_long.R")
-```
-This regenerates `public/data/data.json` from the data sources.
+## 6. Dashboard BuildR (`src/r/launch-ui.R`)
+
+In addition to this repo the [NISRA Dashboard BuildR](https://github.com/NISRA-Tech-Lab/dashboard-buildr) package has been developed. All the necessary code to install and run this package is included here in the Dashboard Template.
+
+1. Ensure that you have installed R 4.6.1 on your machine. This is available on the ITAssist Store without the need for a service request.
+2. In VS Code go to the __Plugins__ tab (or press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>) and search for __R__ (also available [here](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r)) and click __Install__.
+3. Then search for __Live Server__ (available [here](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) and click __Install__
+4. Click the __Go Live__ button that should now be present in the bottom right corner of your VS Code window
+5. Open the `src/r/launch-ui.R` and click the __Run Source__ button at the top of the window.
+6. You should now have a preview of your dashboard running in one browser tab and the interactive interface running in another.
+
+<img src="https://raw.githubusercontent.com/NISRA-Tech-Lab/dashboard-template/refs/heads/main/assets/img/dashboard-buildr.png"/>
 
 ---
 
-## 7. Adding a New Page
+## 7. Data Preparation (`src/r/`)
+
+Datasets from the [NISRA Data Portal](https://data.nisra.gov.uk) can be imported using onscreen the instructions in the [Dashboard BuildR](https://github.com/NISRA-Tech-Lab/dashboard-buildr). If you wish to manually import data follow these steps:
+
+1. Open the `src/config/config.js` script.
+2. Under the `matrix` key, remove the placeholder "EXAMPLETABLE1" and "EXAMPLETABLE2" values and replace those with the MATRIX codes for your desired Data Portal tables
+3. Using the [R plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r) (or alternatively in RStudio) open the `src/r/data.R` script and click the Source button at the top of the screen. This regenerates `public/data/data.json` from the data sources.
+4. Re-run this R script when any new matrix codes are added to the config file or to refresh dashboard figures as source tables on the Data Portal are updated.
+
+> [!TIP]
+> If Github Actions are enabled on your organisation then the Data Portal figures will automatically refresh. If developing privately (using a template) it is recommended that you disable Github Actions as this can result in account charges.
+
+---
+
+## 8. Adding a New Page
+
+Adding a new page to your dashboard is best done using onscreen the instructions in the [Dashboard BuildR](https://github.com/NISRA-Tech-Lab/dashboard-buildr) user interface. If you wish to manually add a new page follow these steps:
 
 1. Take a copy of the page.html file and rename accordingly
 3. Create a matching JS module in `src/` with the same name
@@ -143,11 +163,10 @@ For complete page implementation examples, see the [dashboard-demo repository](h
 
 ---
 
-## 8. Utilities Reference (`src/utils/`)
+## 9. Utilities Reference (`src/utils/`)
 
 Each file in `src/utils/` provides reusable helper functions:
 
-- **charts.js**: Chart creation and data shaping functions
 - **read-data.js**: Loads preprocessed JSON data
 - **update-years.js**: Updates year spans in DOM
 - **insert-value.js**: Inserts calculated values into elements
@@ -159,19 +178,16 @@ Each file in `src/utils/` provides reusable helper functions:
 - **expand-buttons.js**: Inserts expand/collapse controls
 - **wrap-label.js**: Wraps long chart labels for readability
 
+The `src/charts` folder provides functions for plotting charts.
+
 For detailed function signatures and usage examples, see the [dashboard-demo repository](https://github.com/NISRA-Tech-Lab/dashboard-demo).
 
----
-
-## 9. Accessibility & Best Practices
-- Use **high-contrast colours**.
-- Add **ARIA roles** for interactive elements.
-- Ensure charts have **text alternatives** for screen readers.
-- Test responsiveness on mobile and desktop.
-
----
+> [!WARNING]
+> It is not recommended that you alter these function files as doing so may prohibit your fork from receiving future functionality, branding and accessibility updates.
 
 ## 10. How to Add a New Chart or Info Box
+
+Adding chart and info box content to your dashboard is best done using onscreen the instructions in the [Dashboard BuildR](https://github.com/NISRA-Tech-Lab/dashboard-buildr) user interface. If you wish to manually insert a chart follow these steps:
 
 ### Adding a New Chart
 1. Identify the HTML page where you want the chart
